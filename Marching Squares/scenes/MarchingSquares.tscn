@@ -1,14 +1,138 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scripts/MarchingSquares.gd" type="Script" id=1]
+[ext_resource path="res://scripts/MarchingSquareController.gd" type="Script" id=2]
 
 [node name="Root" type="Node2D"]
 script = ExtResource( 1 )
-sizeX = 25
-sizeY = 25
-gridScale = 25
-offsetX = 25
-offsetY = 25
+dotColorFilled = Color( 0, 0.0705882, 0.0980392, 1 )
+dotColorEmpty = Color( 0.0392157, 0.576471, 0.588235, 1 )
+lineColor = Color( 0.607843, 0.133333, 0.14902, 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 512, 300 )
+
+[node name="OffsetMoveTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 10.0
+margin_bottom = 10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UIControlPanel" type="Panel" parent="MarginContainer"]
+margin_right = 577.0
+margin_bottom = 40.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ControlContainer" type="HBoxContainer" parent="MarginContainer/UIControlPanel"]
+anchor_bottom = 0.5
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Speed" type="HBoxContainer" parent="MarginContainer/UIControlPanel/ControlContainer"]
+margin_right = 143.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="SpeedLabel" type="Label" parent="MarginContainer/UIControlPanel/ControlContainer/Speed"]
+margin_top = 13.0
+margin_right = 39.0
+margin_bottom = 27.0
+text = "Speed"
+
+[node name="SpeedSlider" type="HSlider" parent="MarginContainer/UIControlPanel/ControlContainer/Speed"]
+margin_left = 43.0
+margin_right = 143.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 100, 0 )
+min_value = 0.01
+max_value = 0.2
+step = 0.01
+value = 0.12
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Animate" type="HBoxContainer" parent="MarginContainer/UIControlPanel/ControlContainer"]
+margin_left = 147.0
+margin_right = 281.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="AnimateLabel" type="Label" parent="MarginContainer/UIControlPanel/ControlContainer/Animate"]
+margin_top = 13.0
+margin_right = 54.0
+margin_bottom = 27.0
+text = "Animate"
+
+[node name="AnimateCheckButton" type="CheckButton" parent="MarginContainer/UIControlPanel/ControlContainer/Animate"]
+margin_left = 58.0
+margin_right = 134.0
+margin_bottom = 40.0
+pressed = true
+
+[node name="SizeX" type="HBoxContainer" parent="MarginContainer/UIControlPanel/ControlContainer"]
+margin_left = 285.0
+margin_right = 427.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="SizeXLabel" type="Label" parent="MarginContainer/UIControlPanel/ControlContainer/SizeX"]
+margin_top = 13.0
+margin_right = 38.0
+margin_bottom = 27.0
+text = "Width"
+
+[node name="SizeXSlider" type="HSlider" parent="MarginContainer/UIControlPanel/ControlContainer/SizeX"]
+margin_left = 42.0
+margin_right = 142.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 100, 0 )
+min_value = 10.0
+max_value = 70.0
+value = 10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SizeY" type="HBoxContainer" parent="MarginContainer/UIControlPanel/ControlContainer"]
+margin_left = 431.0
+margin_right = 577.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="SizeYLabel" type="Label" parent="MarginContainer/UIControlPanel/ControlContainer/SizeY"]
+margin_top = 13.0
+margin_right = 42.0
+margin_bottom = 27.0
+text = "Height"
+
+[node name="SizeYSlider" type="HSlider" parent="MarginContainer/UIControlPanel/ControlContainer/SizeY"]
+margin_left = 46.0
+margin_right = 146.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 100, 0 )
+min_value = 10.0
+max_value = 38.0
+value = 10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="timeout" from="OffsetMoveTimer" to="MarginContainer/UIControlPanel" method="_on_OffsetMoveTimer_timeout"]
+[connection signal="value_changed" from="MarginContainer/UIControlPanel/ControlContainer/Speed/SpeedSlider" to="MarginContainer/UIControlPanel" method="_on_SpeedSlider_value_changed"]
+[connection signal="toggled" from="MarginContainer/UIControlPanel/ControlContainer/Animate/AnimateCheckButton" to="MarginContainer/UIControlPanel" method="_on_AnimateCheckButton_toggled"]
+[connection signal="value_changed" from="MarginContainer/UIControlPanel/ControlContainer/SizeX/SizeXSlider" to="MarginContainer/UIControlPanel" method="_on_SizeXSlider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/UIControlPanel/ControlContainer/SizeY/SizeYSlider" to="MarginContainer/UIControlPanel" method="_on_SizeYSlider_value_changed"]
