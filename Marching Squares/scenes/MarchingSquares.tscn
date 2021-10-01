@@ -26,8 +26,6 @@ __meta__ = {
 }
 
 [node name="UIControlPanel" type="Panel" parent="MarginContainer"]
-margin_right = 577.0
-margin_bottom = 40.0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
